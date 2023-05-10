@@ -24,7 +24,7 @@ public class DoctorController {
         return doctor;
     }
     @GetMapping("/get/{symptom}")
-    public Doctor getDoctorBySymptom(@PathVariable String symptom){
+    public Doctor getDoctorBySymptom(@PathVariable String symptom)throws Exception{
         return doctorService.getDoctorBySymptom(symptom);
     }
 }

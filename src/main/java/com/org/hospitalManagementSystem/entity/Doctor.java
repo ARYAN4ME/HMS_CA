@@ -35,7 +35,7 @@ public class Doctor {
     @Email(message = "Invalid email address")
     String doctorEmail;
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
-    List<Integer> patientList = new ArrayList<>();
+    List<Doctor> patientList = new ArrayList<>();
 
 
 

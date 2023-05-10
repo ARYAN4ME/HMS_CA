@@ -30,5 +30,5 @@ public class Patient {
     private Symptom symptom;
     @ManyToOne
     @JoinColumn
-    private int doctorId;
+    private Doctor doctor;
 }

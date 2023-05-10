@@ -28,7 +28,7 @@ public class DoctorService {
     }
 
 //    -------------I hava doubt this api------------
-    public Doctor getDoctorBySymptom(String symptom){
+    public Doctor getDoctorBySymptom(String symptom) throws Exception{
         HashSet<String> checkOrthopedic = new HashSet<>();
         checkOrthopedic.add(String.valueOf(Symptom.ARTHRITIS));
         checkOrthopedic.add(String.valueOf(Symptom.BACKPAIN));
@@ -36,16 +36,15 @@ public class DoctorService {
         HashSet<String> checkDermatology = new HashSet<>();
         checkDermatology.add(String.valueOf(Symptom.SKIN_BURN));
         checkDermatology.add(String.valueOf(Symptom.SKIN_INFECTION));
-        Doctor doctor = new Doctor();
+        Doctor findDoctor = new Doctor();
 
         try {
             Patient patient = patientRepository.findBySymptom(symptom);
-            List<Doctor> doctorList = doctorRepository.findByDoctorCity(doctor.getDoctorCity());
+            List<Doctor> doctorList = doctorRepository.findByDoctorCity(patient.getPatientCity());
             if (checkDermatology.contains(symptom)) {
-
                 for(Doctor doctors : doctorList){
                     if(doctors.getSpeciality().equals(Speciality.DERMATOLOGY)){
-                        return doctors;
+                        findDoctor = doctors;
                     }
                     else {
                         throw new Exception("There isn’t any doctor present at your location for your symptom");
@@ -56,7 +55,7 @@ public class DoctorService {
 
                 for(Doctor doctors : doctorList){
                     if(doctors.getSpeciality().equals(Speciality.ORTHOPEDIC)){
-                        return doctors;
+                        findDoctor = doctors;
                     }
                     else {
                         throw new Exception("There isn’t any doctor present at your location for your symptom");
@@ -67,7 +66,7 @@ public class DoctorService {
 
                 for(Doctor doctors : doctorList){
                     if(doctors.getSpeciality().equals(Speciality.GYNECOLOGY)){
-                        return doctors;
+                        findDoctor = doctors;
                     }
                     else {
                         throw new Exception("There isn’t any doctor present at your location for your symptom");
@@ -78,7 +77,7 @@ public class DoctorService {
 
                 for(Doctor doctors : doctorList){
                     if(doctors.getSpeciality().equals(Speciality.ENT_SPECIALIST)){
-                        return doctors;
+                        findDoctor = doctors;
                     }
                     else {
                         throw new Exception("There isn’t any doctor present at your location for your symptom");
@@ -88,11 +87,9 @@ public class DoctorService {
             }
         }
         catch (Exception e){
-            throw new RuntimeException();
+            throw new Exception("We are still waiting to expand to your location");
         }
+        return findDoctor;
     }
-
-
-
 
 }
